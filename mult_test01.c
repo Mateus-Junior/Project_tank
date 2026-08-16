@@ -9,6 +9,7 @@
 	int *Ptorre_origen_i = NULL;
 	int *Ptorre_origen_j = NULL;
 	char *Ptorre_canhao = NULL;
+	char *Ptank_bandeira = NULL;
 	
 	int *Parea = NULL;
 	
@@ -153,7 +154,7 @@ void altera_torre_modo(){
 	
 	void constroi(int y, int x){
 				if(y == *Porigen_i && x == *Porigen_j ){
-					printf("o");
+					printf("%c", *Ptank_bandeira);
 					}
 				
 				else if((*Ptiro_cont > 0)&&((y == *Ptiro_origen_i )&&(x == *Ptiro_origen_j))){
@@ -212,12 +213,13 @@ void altera_torre_modo(){
 	
 int main(){
 	int area, origen_i[2], origen_j[2], torre_origem_i[2], torre_origem_j[2], torre_modo[2], tiro_modo[2], tiro_origen_i[2],tiro_origen_j[2],tiro_cont[2], turno = 0, vida_tanque[2] ;
-	char resposta_2,torre_canhao[2];
+	char resposta_2,torre_canhao[2], tank_bandeira[2];
 	
 	vida_tanque[0] = 5;
 	torre_modo[0] = 0;
 	tiro_modo[0] = 0;
 	tiro_cont[0] = 0;
+	tank_bandeira[0] = 'O';
 	
 	area = 19;
 	origen_i[0] = 2;
@@ -227,6 +229,7 @@ int main(){
 	torre_modo[1] = 4;
 	tiro_modo[1] = 4;
 	tiro_cont[1] = 0;
+	tank_bandeira[1] = '@';
 	
 	origen_i[1] = area - 1;
 	origen_j[1] = area*2 - 1;
@@ -242,6 +245,7 @@ int main(){
 			Ptorre_origen_i = &torre_origem_i[0];
 			Ptorre_origen_j = &torre_origem_j[0];
 			Ptorre_canhao = &torre_canhao[0];
+			Ptank_bandeira = &tank_bandeira[0];
 	
 			Ptiro_origen_i = &tiro_origen_i[0];
 			Ptiro_origen_j = &tiro_origen_j[0];
@@ -256,6 +260,7 @@ int main(){
 			Ptorre_origen_i = &torre_origem_i[1];
 			Ptorre_origen_j = &torre_origem_j[1];
 			Ptorre_canhao = &torre_canhao[1];
+			Ptank_bandeira = &tank_bandeira[1];
 	
 			Ptiro_origen_i = &tiro_origen_i[1];
 			Ptiro_origen_j = &tiro_origen_j[1];
