@@ -18,6 +18,9 @@
 	int *Ptiro_modo = NULL;
 	int *Ptiro_cont = NULL;
 	
+	int *Pvida_tanque_p0 = NULL;
+	int *Pvida_tanque_p1 = NULL;
+	
 void move_tank( char para_onde_move){
 	
 	if (para_onde_move == 'w'){
@@ -170,7 +173,7 @@ void altera_torre_modo(){
 					}
 					
 				else{
-					printf(".");
+					printf(" ");
 					}
 				}
 			
@@ -210,6 +213,172 @@ void altera_torre_modo(){
 					}
 		}
 	
+	void constroi_hud(int y, int x){
+		int area_j = *Parea * 2;
+		
+		if((y == 1 && x == area_j + 2)||(y == 1 && x == area_j + 7)){
+			printf("P");
+			}
+		else if((y == 1 && x == area_j + 4)||(y == 1 && x == area_j + 9)){
+			printf(":");
+			}
+			
+		else if(y == 1 && x == area_j + 3){
+			printf("0");
+			}
+		else if(y == 1 && x == area_j + 8){
+			printf("@");
+			}
+			
+		else if(y == 2 && x == area_j + 3){
+			if (*Pvida_tanque_p0>0){
+				printf("o");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 3 && x == area_j + 3){
+			if (*Pvida_tanque_p0>1){
+				printf("o");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 4 && x == area_j + 3){
+			if (*Pvida_tanque_p0>2){
+				printf("o");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 5 && x == area_j + 3){
+			if (*Pvida_tanque_p0>3){
+				printf("o");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 6 && x == area_j + 3){
+			if (*Pvida_tanque_p0>4){
+				printf("o");
+				}
+			else{
+				printf("x");
+				}
+			}
+			
+		else if(y == 2 && x == area_j + 8){
+			if (*Pvida_tanque_p1>0){
+				printf("@");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 3 && x == area_j + 8){
+			if (*Pvida_tanque_p1>1){
+				printf("@");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 4 && x == area_j + 8){
+			if (*Pvida_tanque_p1>2){
+				printf("@");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 5 && x == area_j + 8){
+			if (*Pvida_tanque_p1>3){
+				printf("@");
+				}
+			else{
+				printf("x");
+				}
+			}
+		else if(y == 6 && x == area_j + 8){
+			if (*Pvida_tanque_p1>4){
+				printf("@");
+				}
+			else{
+				printf("x");
+				}
+			}
+		
+		else if(y == 10 && x == area_j + 2){			
+			printf("W");
+			}
+		else if(y == 10 && x == area_j + 3){			
+			printf(":");
+			}
+		else if(y == 10 && x == area_j + 8){			
+			printf("^");
+			}
+			
+		else if(y == 11 && x == area_j + 2){			
+			printf("s");
+			}
+		else if(y == 11 && x == area_j + 3){			
+			printf(":");
+			}
+		else if(y == 11 && x == area_j + 8){			
+			printf("v");
+			}
+			
+		else if(y == 12 && x == area_j + 2){			
+			printf("a");
+			}
+		else if(y == 12 && x == area_j + 3){			
+			printf(":");
+			}
+		else if(y == 12 && x == area_j + 8){			
+			printf("<");
+			}
+			
+		else if(y == 13 && x == area_j + 2){			
+			printf("d");
+			}
+		else if(y == 13 && x == area_j + 3){			
+			printf(":");
+			}
+		else if(y == 13 && x == area_j + 8){			
+			printf(">");
+			}
+			
+		else if(y == 14 && x == area_j + 2){			
+			printf("e");
+			}
+		else if(y == 14 && x == area_j + 3){			
+			printf(":");
+			}
+			else if(y == 14 && x == area_j + 5){			
+			printf("S");
+			}
+			else if(y == 14 && x == area_j + 6){			
+			printf("a");
+			}
+			else if(y == 14 && x == area_j + 7){			
+			printf("i");
+			}
+			else if(y == 14 && x == area_j + 8){			
+			printf("r");
+			}
+				
+		else if(((y > 0 && y  <= 7) && (x > area_j + 1 && x <= area_j + 9))||((y > 9 && y  <= 14) && (x > area_j + 1 && x <= area_j + 9))){
+			printf(" ");
+			}
+			
+		else{
+			printf(".");
+		}
+	}
 	
 int main(){
 	int area, origen_i[2], origen_j[2], torre_origem_i[2], torre_origem_j[2], torre_modo[2], tiro_modo[2], tiro_origen_i[2],tiro_origen_j[2],tiro_cont[2], turno = 0, vida_tanque[2] ;
@@ -233,10 +402,11 @@ int main(){
 	
 	origen_i[1] = area - 1;
 	origen_j[1] = area*2 - 1;
-
+	
+	Pvida_tanque_p0 = &vida_tanque[0];
+	Pvida_tanque_p1 = &vida_tanque[1];
 	
 	while(1){
-		printf("Tanque 1:%d-----------------------------Tanque 2:%d\n",vida_tanque[0], vida_tanque[1]);
 		if(turno%2 == 0){
 			Porigen_i = &origen_i[0];
 			Porigen_j = &origen_j[0];
@@ -271,20 +441,22 @@ int main(){
 		Parea = &area;
 		altera_torre_modo();
 		
-		for(int i = 1; i <= area; i++){
-			for(int j = 1; j <= area*2; j++){
+		for(int i = -1; i <= area+2; i++){
+			for(int j = -1; j <= area*2+10; j++){
 				
-				
-				constroi(i, j);
+				if ((i>0 && j<=area*2)&&(j>0 && i <=area)){
+					constroi(i, j);
+				}
+				else{
+					constroi_hud(i, j);
+					}
 				
 			}
 		
 			printf("\n");
 		}
 		
-		printf("Informe a direção em q vc quer mover: e(para parar)\n");
-		printf("Tank:  w(cima) s(baicho) d(direita) a(esquerda) :\n");
-		printf("Torre: j(anti-horário) l(horário) k(atirar): \n");
+		printf("Torre: j(anti-horário) l(horário) k(atirar): ");
 		scanf(" %c", &resposta_2);
 		
 		// \e[H move o cursor para o topo, \e[2J limpa a tela visível, \e[3J limpa o buffer de rolagem
@@ -297,7 +469,6 @@ int main(){
 		else{
 			break;
 			}
-		
 		move_tiro();
 		
 		if((tiro_origen_i[0] == origen_i[1]) && (tiro_origen_j[0] == origen_j[1])){
