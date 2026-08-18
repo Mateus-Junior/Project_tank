@@ -20,6 +20,31 @@
 	
 	int *Pvida_tanque_p0 = NULL;
 	int *Pvida_tanque_p1 = NULL;
+
+void menu_iniciar(){
+	int test;
+	printf("               ___                           _  _   \n");
+    printf(" __________   / _ \\             __      __  | |/ /  \n");
+    printf(" |__    __|  / /_\\ _________   |   \\   / /  |   /   \n");
+    printf("    |  |    / ___ /         \\  | |\\ \\_/ /   |   \\   \n");
+    printf("    |__|   /_/   |\\          | |_| \\___/    |_|\\_\\  \n");
+    printf("                 | \\        /|                      \n");
+    printf("     ____________| --------- |________              \n");
+    printf("    /\\           | |/____/ | |  /   __\\_            \n");
+    printf("   |  \\          \\ |/    \\ | /  |\\ /____\\           \n");
+    printf("   |\\  \\   _____  \\||    |/|/   ||\\|____|           \n");
+    printf("   |\\  \\   \\    \\   \\____/      ||   |   \\          \n");
+    printf("   \\| \\  \\  \\____\\              \\|___|    \\         \n");
+    printf("    \\ |\\  \\                                \\        \n");
+    printf("     \\| \\  \\___________---------____________\\       \n");
+    printf("      \\ |\\  \\          |       |            |       \n");
+    printf("       \\| \\ |          ---------            |       \n");
+    printf("        \\ |\\|_______________________________|       \n");
+    printf("         \\| |       |             \\| |     |        \n");
+    printf("          \\_/_______/              \\_|_____/\n");
+    printf("Press any kay to start");
+    scanf(" %d",test);
+	}
 	
 void move_tank( char para_onde_move){
 	
@@ -405,6 +430,8 @@ int main(){
 	
 	Pvida_tanque_p0 = &vida_tanque[0];
 	Pvida_tanque_p1 = &vida_tanque[1];
+	
+	menu_iniciar();
 	
 	while(1){
 		if(turno%2 == 0){
