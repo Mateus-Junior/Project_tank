@@ -1,5 +1,7 @@
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 	int *Porigen_i = NULL;
@@ -20,6 +22,8 @@
 	
 	int *Pvida_tanque_p0 = NULL;
 	int *Pvida_tanque_p1 = NULL;
+
+
 
 void menu_iniciar(){
 	int test;
@@ -46,26 +50,58 @@ void menu_iniciar(){
     scanf("%d", &test); 
 	}
 	
-void move_tank( char para_onde_move){
+void move_tank( char para_onde_move, int p_modo){
 	switch(para_onde_move){
 		case 'w':
-			if(*Porigen_i-2 > 0)
-				*Porigen_i = *Porigen_i-1;
+			if(*Porigen_i-2 > 0){
+				if(p_modo == 0){
+					if(((*Porigen_j > *Parea+2)||(*Porigen_j < *Parea-2))||((*Porigen_i > *Parea/2+2)||(*Porigen_i < *Parea/2-2)))
+						*Porigen_i = *Porigen_i-1;
+				}
+				else{
+					if((*Porigen_i != *Parea/2+4)||((*Porigen_j > *Parea-2)&&(*Porigen_j < *Parea+2)))
+						*Porigen_i = *Porigen_i-1;
+				}
+			}				
 			break;
 			
 		case 's':
-			if(*Porigen_i+1 < *Parea)
-				*Porigen_i = *Porigen_i+1;
+			if(*Porigen_i+1 < *Parea){
+				if(p_modo == 0){
+					if(((*Porigen_j > *Parea+2)||(*Porigen_j < *Parea-2))||((*Porigen_i > *Parea/2+2)||(*Porigen_i < *Parea/2-2)))
+						*Porigen_i = *Porigen_i+1;
+				}
+				else{
+					if((*Porigen_i != *Parea/2-4)||((*Porigen_j > *Parea-2)&&(*Porigen_j < *Parea+2)))
+						*Porigen_i = *Porigen_i+1;
+				}
+			}
 			break;
 			
 		case 'd':
-			if(*Porigen_j+1 < *Parea*2)
-				*Porigen_j = *Porigen_j+1;
+			if(*Porigen_j+1 < *Parea*2){
+				if(p_modo == 1){
+					if(((*Porigen_j > *Parea+2)||(*Porigen_j < *Parea-2))||((*Porigen_i > *Parea/2+2)||(*Porigen_i < *Parea/2-2)))
+						*Porigen_j = *Porigen_j+1;
+				}
+				else{
+					if((*Porigen_j != *Parea-4)||((*Porigen_i > *Parea/2-2)&&(*Porigen_i < *Parea/2+2)))
+						*Porigen_j = *Porigen_j+1;
+				}
+			}
 			break;
 			
 		case 'a':
-			if(*Porigen_j-2 > 0 )
-				*Porigen_j = *Porigen_j-1;
+			if(*Porigen_j-2 > 0 ){
+				if(p_modo == 1){
+					if(((*Porigen_j > *Parea+2)||(*Porigen_j < *Parea-2))||((*Porigen_i > *Parea/2+2)||(*Porigen_i < *Parea/2-2)))
+						*Porigen_j = *Porigen_j-1;
+				}
+				else{
+					if((*Porigen_j != *Parea+4)||((*Porigen_i > *Parea/2-2)&&(*Porigen_i < *Parea/2+2)))
+						*Porigen_j = *Porigen_j-1;
+				}
+			}
 			break;
 		
 		
@@ -188,6 +224,32 @@ void constroi(int y, int x){
 		printf(" ");
 }
 			
+void constroi_ponte(int c, int v, int p_modo){
+	if(p_modo == 0){
+		if(((v == *Parea+2)||(v == *Parea-2))&&((c < *Parea/2-2)||(c > *Parea/2+3))){
+			printf("|");
+		}
+		else if(((v > *Parea-2)&&(v < *Parea+2))&&((c == *Parea/2+3)||(c == *Parea/2-2))){
+			printf("_");
+		}
+		else{
+			constroi(c, v);
+		}
+	}
+	else{
+		if(((c == *Parea/2+2)||(c == *Parea/2-2))&&((v < *Parea-3)||(v > *Parea+3))){
+			if(p_modo == 1)
+				printf("_");
+		}
+		else if(((c > *Parea/2-2)&&(c < *Parea/2+2))&&((v == *Parea+2)||(v == *Parea-2))){
+			if(p_modo == 1)
+				printf("|");
+		}
+		else{
+			constroi(c, v);
+		}
+	}
+}
 		
 void move_tiro(){
 	if(*Ptiro_cont > 0){
@@ -355,7 +417,11 @@ void constroi_hud(int y, int x){
 	
 int main(){
 	int area, origen_i[2], origen_j[2], torre_origem_i[2], torre_origem_j[2], torre_modo[2], tiro_modo[2], tiro_origen_i[2],tiro_origen_j[2],tiro_cont[2], turno = 0, vida_tanque[2] ;
-	char resposta_2,torre_canhao[2], tank_bandeira[2];
+	char resposta_2,torre_canhao[2], tank_bandeira[2], ponte_modo;
+	
+	srand(time(NULL));
+	
+	ponte_modo = rand()%2;
 	
 	vida_tanque[0] = 5;
 	torre_modo[0] = 0;
@@ -420,15 +486,20 @@ int main(){
 			for(int j = -1; j <= area*2+10; j++){
 				
 				if ((i>0 && j<=area*2)&&(j>0 && i <=area))
-					constroi(i, j);
+					constroi_ponte(i, j, ponte_modo);
 				else
 					constroi_hud(i, j);
 				
 			}
-		
 			printf("\n");
 		}
 		
+		/*
+		printf("t_i %d, t_j %d\n", *Porigen_i, *Porigen_j);
+		
+		printf("area %d, area/2 %d\n", area, area/2);
+		*/
+			
 		printf("Torre: j(anti-horário) l(horário) k(atirar): ");
 		scanf("  %c", &resposta_2);
 		
@@ -436,7 +507,7 @@ int main(){
 		printf("\e[1;1H\e[2J\e[3J");
 		
 		if (resposta_2 != 'e')
-			move_tank(resposta_2);
+			move_tank(resposta_2, ponte_modo);
 		else
 			break;
 		move_tiro();
